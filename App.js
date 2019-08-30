@@ -1,65 +1,31 @@
-import React,{Component} from "react";
-import { createBottomTabNavigator, createAppContainer } from "react-navigation";
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { Button } from "react-native-paper";
+import  React, { Component } from "react";
+import { View, ScrollView, StyleSheet,Text} from "react-native";
+import {Provider} from 'react-redux'
+import { createBottomTabNavigator, createAppContainer,createSwitchNavigator } from 'react-navigation';
+import { connect } from 'react-redux';
 
-import ProfileNavigator from "./src/navigator/ProfileNavigator"
-import HomeNavigator from "./src/navigator/HomeNavigator";
-import ChatNavigator from "./src/navigator/ChatNavigator";
-import Iklan from "./src/screens/Iklan/Iklan";
-import KosList from "./src/screens/Kos/KosList"
-// import Whitlist from "./src/screens/Whitlist/Whitlist";
-// import { btnColor } from "./src/constant";
+import store from './src/_redux/store';
+import Welcome from './src/screen/Welcome'
+import Users from './src/screen/Users';
 
-
-const TabNavigator = createBottomTabNavigator(
-  {
-    Home: {
-      screen: HomeNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="home-outline" color={tintColor} size={25} />
-        )
-      }
+const RootNavigation = createAppContainer(
+  createBottomTabNavigator({
+    Welcome: {
+      screen: Welcome
     },
-    Whitlist: {
-      screen: Iklan,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-chatboxes" color={tintColor} size={25} />
-        )
-      }
-    },
-    Chat: {
-      screen: ChatNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="ios-person" color={tintColor} size={25} />
-        )
-      }
-    },
-    Profile: {
-      screen: ProfileNavigator,
-      navigationOptions: {
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="account-circle-outline" color={tintColor} size={25} />
-        )
-      }
+    Users : {
+      screen: Users
     }
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: 'gray'
-      },
-      headerTintColor: "#fff"
-    },
-    tabBarOptions: {
-      activeTintColor: 'green',
-      inactiveTintColor: "gray"
-    }
+  })
+)
+class App extends Component {
+  
+  render() { 
+    return ( <Provider store={store}>  
+                <RootNavigation />
+        </Provider> );
   }
-);
+}
 
-export default createAppContainer(TabNavigator);
+export default App
+
